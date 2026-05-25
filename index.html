@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia ACS - Agentes Comunitários de Saúde</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app">
+
+        <header class="header">
+            <h1 class="header__title">Aprendizado ACS</h1>
+            <p class="header__subtitle">Agentes Comunit&aacute;rios de Sa&uacute;de &mdash; Capacita&ccedil;&atilde;o Profissional</p>
+        </header>
+
+        <div class="body">
+
+            <aside class="sidebar" aria-label="Navega&ccedil;&atilde;o dos m&oacute;dulos">
+
+                <div class="progress-card" aria-live="polite">
+                    <p class="progress-card__label">Seu progresso</p>
+                    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar">
+                        <div class="progress-bar__fill" id="progressFill"></div>
+                    </div>
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat__value" id="statModules">0</div>
+                            <div class="stat__label">M&oacute;dulos</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat__value" id="statScore">&mdash;</div>
+                            <div class="stat__label">Acertos</div>
+                        </div>
+                    </div>
+                </div>
+
+                <nav>
+                    <p class="nav__heading" id="nav-label">M&oacute;dulos</p>
+                    <ul class="nav__list" role="tablist" aria-labelledby="nav-label">
+                        <li class="nav__item" role="tab" aria-selected="true"  tabindex="0"  data-module="0">
+                            <span class="nav__item-label">Fundamentos do ACS</span>
+                            <span class="badge badge--new" data-badge="0">Novo</span>
+                        </li>
+                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="1">
+                            <span class="nav__item-label">Promo&ccedil;&atilde;o da Sa&uacute;de</span>
+                            <span class="badge badge--new" data-badge="1">Novo</span>
+                        </li>
+                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="2">
+                            <span class="nav__item-label">Atua&ccedil;&atilde;o na Comunidade</span>
+                            <span class="badge badge--new" data-badge="2">Novo</span>
+                        </li>
+                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="3">
+                            <span class="nav__item-label">Vigil&acirc;ncia em Sa&uacute;de</span>
+                            <span class="badge badge--new" data-badge="3">Novo</span>
+                        </li>
+                        <li class="nav__item nav__item--levels" role="tab" aria-selected="false" tabindex="-1" data-module="4">
+                            <span class="nav__item-label">Conte&uacute;do para Estudo</span>
+                            <span class="badge badge--new">19 T&oacute;picos</span>
+                        </li>
+                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="5">
+                            <span class="nav__item-label">Avalia&ccedil;&atilde;o por N&iacute;vel</span>
+                            <span class="badge badge--new">4 N&iacute;veis</span>
+                        </li>
+                        <li class="nav__item nav__item--exam" role="tab" aria-selected="false" tabindex="-1" data-module="6">
+                            <span class="nav__item-label">Simulado de Prova</span>
+                            <span class="badge badge--exam">30 Quest&otilde;es</span>
+                        </li>
+                    </ul>
+                </nav>
+
+            </aside>
+
+            <main class="content">
+
+                <!-- MÓDULO 0 -->
+                <section class="panel" role="tabpanel" data-panel="0" aria-hidden="false">
+                    <h2 class="lesson__title">Fundamentos do Agente Comunit&aacute;rio de Sa&uacute;de</h2>
+
+                    <p class="lesson__text">
+                        O Agente Comunit&aacute;rio de Sa&uacute;de (ACS) &eacute; um profissional essencial na aten&ccedil;&atilde;o prim&aacute;ria &agrave; sa&uacute;de.
+                        Atua como elo entre a comunidade e o sistema de sa&uacute;de, promovendo educa&ccedil;&atilde;o em sa&uacute;de e preven&ccedil;&atilde;o de doen&ccedil;as.
+                    </p>
+
+                    <div class="callout callout--highlight">
+                        Miss&atilde;o Principal: Atuar como intermedi&aacute;rio entre a comunidade e os servi&ccedil;os de sa&uacute;de, contribuindo para a melhoria da qualidade de vida.
+                    </div>
+
+                    <div class="lesson__text">
+                        <strong>Principais Responsabilidades:</strong>
+                        <ul class="lesson__list">
+                            <li>Orienta&ccedil;&atilde;o individual &agrave; popula&ccedil;&atilde;o</li>
+                            <li>Promo&ccedil;&atilde;o da sa&uacute;de e preven&ccedil;&atilde;o de doen&ccedil;as</li>
+                            <li>Acompanhamento de fam&iacute;lias em risco</li>
+                            <li>Registro de dados epidemiol&oacute;gicos</li>
+                            <li>Mobiliza&ccedil;&atilde;o comunit&aacute;ria</li>
+                        </ul>
+                    </div>
+
+                    <div class="callout callout--case">
+                        <p class="callout__title">Caso de Estudo: Preven&ccedil;&atilde;o na Comunidade</p>
+                        <p class="callout__body">Maria, ACS h&aacute; 5 anos, identifica aumento de casos de hipertens&atilde;o em seu bairro. Ela organiza grupos de educa&ccedil;&atilde;o em sa&uacute;de nas igrejas locais, promove atividades de exerc&iacute;cio e consegue sensibilizar 40 pessoas para fazer o acompanhamento m&eacute;dico. Resultado: redu&ccedil;&atilde;o de 35% em complica&ccedil;&otilde;es cardiovasculares na &aacute;rea.</p>
+                    </div>
+
+                    <div class="quiz" data-quiz="0">
+                        <p class="quiz__title">Teste Seu Conhecimento</p>
+
+                        <div class="question" data-question="q1">
+                            <p class="question__text">Qual &eacute; o papel principal do ACS na comunidade?</p>
+                            <div class="options" role="radiogroup">
+                                <label class="option"><input type="radio" name="q1" value="a"> <span>Prescrever medicamentos</span></label>
+                                <label class="option"><input type="radio" name="q1" value="b"> <span>Ser elo entre comunidade e sistema de sa&uacute;de, promovendo educa&ccedil;&atilde;o em sa&uacute;de</span></label>
+                                <label class="option"><input type="radio" name="q1" value="c"> <span>Realizar cirurgias simples</span></label>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+
+                        <div class="question" data-question="q2">
+                            <p class="question__text">Qual atividade &eacute; responsabilidade do ACS?</p>
+                            <div class="options" role="radiogroup">
+                                <label class="option"><input type="radio" name="q2" value="a"> <span>Diagn&oacute;stico de doen&ccedil;as complexas</span></label>
+                                <label class="option"><input type="radio" name="q2" value="b"> <span>Acompanhamento de fam&iacute;lias em risco e promo&ccedil;&atilde;o da sa&uacute;de</span></label>
+                                <label class="option"><input type="radio" name="q2" value="c"> <span>Substituir o m&eacute;dico na unidade</span></label>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+
+                        <div class="quiz__actions">
+                            <button class="btn btn--primary" data-action="check" data-quiz-target="0">Verificar Respostas</button>
+                            <button class="btn btn--ghost"   data-action="reset" data-quiz-target="0" hidden>Refazer</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MÓDULO 1 -->
+                <section class="panel" role="tabpanel" data-panel="1" aria-hidden="true">
+                    <h2 class="lesson__title">Promo&ccedil;&atilde;o da Sa&uacute;de e Preven&ccedil;&atilde;o de Doen&ccedil;as</h2>
+
+                    <p class="lesson__text">
+                        A promo&ccedil;&atilde;o da sa&uacute;de &eacute; uma estrat&eacute;gia fundamental para melhorar a qualidade de vida. Envolve n&atilde;o apenas tratar doen&ccedil;as, mas criar condi&ccedil;&otilde;es que permitam que as pessoas vivam vidas mais saud&aacute;veis.
+                    </p>
+
+                    <div class="callout callout--highlight">
+                        Princ&iacute;pio: Empoderar indiv&iacute;duos e comunidades para aumentar o controle sobre sua sa&uacute;de e melhor&aacute;-la.
+                    </div>
+
+                    <div class="callout callout--exercise">
+                        <p class="callout__title">Exerc&iacute;cio Pr&aacute;tico</p>
+                        <p class="callout__body">Voc&ecirc; est&aacute; em uma comunidade com alta incid&ecirc;ncia de diabetes. Crie um plano de a&ccedil;&atilde;o com 5 passos que voc&ecirc;, como ACS, implementaria. Considere educa&ccedil;&atilde;o, incentivo &agrave; atividade f&iacute;sica e monitoramento.</p>
+                    </div>
+
+                    <div class="lesson__text">
+                        <strong>Estrat&eacute;gias de Promo&ccedil;&atilde;o da Sa&uacute;de:</strong>
+                        <ul class="lesson__list">
+                            <li>Grupos educativos sobre nutri&ccedil;&atilde;o e exerc&iacute;cio</li>
+                            <li>Rastreamento de fatores de risco</li>
+                            <li>Promo&ccedil;&atilde;o de h&aacute;bitos saud&aacute;veis</li>
+                            <li>Mobiliza&ccedil;&atilde;o de recursos comunit&aacute;rios</li>
+                            <li>Parcerias com organiza&ccedil;&otilde;es locais</li>
+                        </ul>
+                    </div>
+
+                    <div class="quiz" data-quiz="1">
+                        <p class="quiz__title">Desafio de Conhecimento</p>
+
+                        <div class="question" data-question="q3">
+                            <p class="question__text">A promo&ccedil;&atilde;o da sa&uacute;de busca principalmente:</p>
+                            <div class="options" role="radiogroup">
+                                <label class="option"><input type="radio" name="q3" value="a"> <span>Tratar doen&ccedil;as j&aacute; existentes</span></label>
+                                <label class="option"><input type="radio" name="q3" value="b"> <span>Criar condi&ccedil;&otilde;es para que pessoas vivam de forma mais saud&aacute;vel</span></label>
+                                <label class="option"><input type="radio" name="q3" value="c"> <span>Aumentar o n&uacute;mero de medicamentos na comunidade</span></label>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+
+                        <div class="question" data-question="q4">
+                            <p class="question__text">Qual &eacute; uma estrat&eacute;gia eficaz de promo&ccedil;&atilde;o da sa&uacute;de?</p>
+                            <div class="options" role="radiogroup">
+                                <label class="option"><input type="radio" name="q4" value="a"> <span>Apenas fornecer medicamentos</span></label>
+                                <label class="option"><input type="radio" name="q4" value="b"> <span>Grupos educativos sobre nutri&ccedil;&atilde;o e exerc&iacute;cio</span></label>
+                                <label class="option"><input type="radio" name="q4" value="c"> <span>Evitar contato com a comunidade</span></label>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+
+                        <div class="quiz__actions">
+                            <button class="btn btn--primary" data-action="check" data-quiz-target="1">Verificar Respostas</button>
+                            <button class="btn btn--ghost"   data-action="reset" data-quiz-target="1" hidden>Refazer</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MÓDULO 2 -->
+                <section class="panel" role="tabpanel" data-panel="2" aria-hidden="true">
+                    <h2 class="lesson__title">Atua&ccedil;&atilde;o Efetiva na Comunidade</h2>
+
+                    <p class="lesson__text">
+                        Atuar na comunidade exige sensibilidade cultural, empatia e compreens&atilde;o das realidades locais. O ACS deve ser um agente de mudan&ccedil;a respeitoso e inclusivo.
+                    </p>
+
+                    <div class="callout callout--highlight">
+                        Valor: Respeitar a diversidade cultural e os saberes tradicionais enquanto promove sa&uacute;de baseada em evid&ecirc;ncias cient&iacute;ficas.
+                    </div>
+
+                    <div class="callout callout--case">
+                        <p class="callout__title">Exemplo de Sucesso: Jo&atilde;o da Silva</p>
+                        <p class="callout__body">Jo&atilde;o, ACS h&aacute; 8 anos, conquistou a confian&ccedil;a da comunidade ao participar das festas locais, ajudar na organiza&ccedil;&atilde;o de eventos e estar sempre dispon&iacute;vel. Quando surge um problema de sa&uacute;de, as pessoas o procuram primeiro, gerando diagn&oacute;sticos mais precoces e melhores resultados.</p>
+                    </div>
+
+                    <div class="lesson__text">
+                        <strong>Caracter&iacute;sticas de um Bom ACS:</strong>
+                        <ul class="lesson__list">
+                            <li>Empatia e capacidade de escuta</li>
+                            <li>Comunica&ccedil;&atilde;o clara e acess&iacute;vel</li>
+                            <li>Conhecimento t&eacute;cnico atualizado</li>
+                            <li>Articula&ccedil;&atilde;o com servi&ccedil;os de sa&uacute;de</li>
+                            <li>Lideran&ccedil;a comunit&aacute;ria</li>
+                        </ul>
+                    </div>
+
+                    <div class="callout callout--exercise">
+                        <p class="callout__title">Exerc&iacute;cio de Cen&aacute;rio</p>
+                        <p class="callout__body">Uma fam&iacute;lia da sua &aacute;rea recusa vacina&ccedil;&atilde;o por motivos religiosos. Como voc&ecirc;, como ACS, abordaria esta situa&ccedil;&atilde;o mantendo respeito &agrave; cren&ccedil;a e promovendo sa&uacute;de? Descreva seu plano de di&aacute;logo.</p>
+                    </div>
+
+                    <div class="quiz" data-quiz="2">
+                        <p class="quiz__title">Teste Sua Sensibilidade Social</p>
+
+                        <div class="question" data-question="q5">
+                            <p class="question__text">Como um ACS deve lidar com diferen&ccedil;as culturais?</p>
+                            <div class="options" role="radiogroup">
+                                <label class="option"><input type="radio" name="q5" value="a"> <span>Impor suas pr&oacute;prias cren&ccedil;as</span></label>
+                                <label class="option"><input type="radio" name="q5" value="b"> <span>Respeitar, entender e articular sa&uacute;de com a realidade local</span></label>
+                                <label class="option"><input type="radio" name="q5" value="c"> <span>Evitar falar sobre o assunto</span></label>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+
+                        <div class="question" data-question="q6">
+                            <p class="question__text">Qual caracter&iacute;stica &eacute; essencial para um ACS?</p>
+                            <div class="options" role="radiogroup">
+                                <label class="option"><input type="radio" name="q6" value="a"> <span>Apenas conhecimento t&eacute;cnico</span></label>
+                                <label class="option"><input type="radio" name="q6" value="b"> <span>Empatia, comunica&ccedil;&atilde;o clara e confian&ccedil;a da comunidade</span></label>
+                                <label class="option"><input type="radio" name="q6" value="c"> <span>Dist&acirc;ncia profissional total</span></label>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+
+                        <div class="quiz__actions">
+                            <button class="btn btn--primary" data-action="check" data-quiz-target="2">Verificar Respostas</button>
+                            <button class="btn btn--ghost"   data-action="reset" data-quiz-target="2" hidden>Refazer</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MÓDULO 3 -->
+                <section class="panel" role="tabpanel" data-panel="3" aria-hidden="true">
+                    <h2 class="lesson__title">Vigil&acirc;ncia em Sa&uacute;de e Monitoramento</h2>
+
+                    <p class="lesson__text">
+                        A vigil&acirc;ncia em sa&uacute;de &eacute; um processo cont&iacute;nuo de coleta, an&aacute;lise e interpreta&ccedil;&atilde;o de dados para detectar mudan&ccedil;as na sa&uacute;de das popula&ccedil;&otilde;es e implementar a&ccedil;&otilde;es preventivas.
+                    </p>
+
+                    <div class="callout callout--highlight">
+                        Objetivo: Identificar precocemente problemas de sa&uacute;de e orientar a&ccedil;&otilde;es de preven&ccedil;&atilde;o e controle de doen&ccedil;as.
+                    </div>
+
+                    <div class="lesson__text">
+                        <strong>Atividades de Vigil&acirc;ncia do ACS:</strong>
+                        <ul class="lesson__list">
+                            <li>Visitas domiciliares e levantamento de dados</li>
+                            <li>Identifica&ccedil;&atilde;o de casos suspeitos</li>
+                            <li>Notifica&ccedil;&atilde;o de doen&ccedil;as compuls&oacute;rias</li>
+                            <li>Acompanhamento de grupos vulner&aacute;veis</li>
+                            <li>Registro de informa&ccedil;&otilde;es epidemiol&oacute;gicas</li>
+                            <li>Comunica&ccedil;&atilde;o com equipe de sa&uacute;de</li>
+                        </ul>
+                    </div>
+
+                    <div class="callout callout--case">
+                        <p class="callout__title">Caso Real: Identifica&ccedil;&atilde;o Precoce</p>
+                        <p class="callout__body">Durante visitas rotineiras, o ACS Carlos identificou 3 crian&ccedil;as com sinais de desnutri&ccedil;&atilde;o. Encaminhou para avalia&ccedil;&atilde;o, coordenou apoio alimentar com assist&ecirc;ncia social e acompanhou mensalmente. Ap&oacute;s 6 meses, todas recuperaram o peso adequado.</p>
+                    </div>
+
+                    <div class="callout callout--exercise">
+                        <p class="callout__title">Exerc&iacute;cio: Registro de Dados</p>
+                        <p class="callout__body">Durante suas visitas esta semana, voc&ecirc; identificou: 1 caso de dengue, 2 crian&ccedil;as com diarreia, 1 idoso com queda. Como voc&ecirc; registraria estas informa&ccedil;&otilde;es e qual seria seu pr&oacute;ximo passo?</p>
+                    </div>
+
+                    <div class="quiz" data-quiz="3">
+                        <p class="quiz__title">Avalia&ccedil;&atilde;o Final &mdash; Vigil&acirc;ncia em Sa&uacute;de</p>
+
+                        <div class="question" data-question="q7">
+                            <p class="question__text">O objetivo principal da vigil&acirc;ncia em sa&uacute;de &eacute;:</p>
+                            <div class="options" role="radiogroup">
+                                <label class="option"><input type="radio" name="q7" value="a"> <span>Punir pessoas que ficam doentes</span></label>
+                                <label class="option"><input type="radio" name="q7" value="b"> <span>Detectar precocemente problemas de sa&uacute;de e implementar preven&ccedil;&atilde;o</span></label>
+                                <label class="option"><input type="radio" name="q7" value="c"> <span>Apenas fazer relat&oacute;rios sem a&ccedil;&atilde;o</span></label>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+
+                        <div class="question" data-question="q8">
+                            <p class="question__text">Quando voc&ecirc; identifica um caso suspeito de doen&ccedil;a transmiss&iacute;vel, deve:</p>
+                            <div class="options" role="radiogroup">
+                                <label class="option"><input type="radio" name="q8" value="a"> <span>Manter em sigilo total</span></label>
+                                <label class="option"><input type="radio" name="q8" value="b"> <span>Notificar a equipe de sa&uacute;de e acompanhar as orienta&ccedil;&otilde;es</span></label>
+                                <label class="option"><input type="radio" name="q8" value="c"> <span>Ignorar e continuar as atividades normais</span></label>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+
+                        <div class="quiz__actions">
+                            <button class="btn btn--primary" data-action="check" data-quiz-target="3">Concluir Avalia&ccedil;&atilde;o</button>
+                            <button class="btn btn--ghost"   data-action="reset" data-quiz-target="3" hidden>Refazer</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MÓDULO 4 — Conteúdo para Estudo -->
+                <section class="panel" role="tabpanel" data-panel="4" aria-hidden="true">
+                    <h2 class="lesson__title">Conte&uacute;do para Estudo</h2>
+                    <p class="lesson__text">T&oacute;picos essenciais para o dia a dia do ACS &mdash; estude por categoria, marque o que j&aacute; domina e acompanhe seu progresso.</p>
+
+                    <div class="study-controls">
+                        <input class="study-search" id="studySearch" type="search" placeholder="Buscar t&oacute;pico ou palavra-chave...">
+                        <div class="study-filters" id="studyFilters" role="group" aria-label="Filtrar por categoria"></div>
+                    </div>
+
+                    <div class="study-stats">
+                        <span id="studyProgressText">0 de 15 t&oacute;picos estudados</span>
+                        <div class="study-progress-bar" id="studyProgressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                            <div class="study-progress-bar__fill" id="studyProgressFill"></div>
+                        </div>
+                    </div>
+
+                    <div class="study-grid" id="studyGrid"></div>
+                    <p class="study-no-results" id="studyNoResults" hidden>Nenhum t&oacute;pico encontrado para essa busca.</p>
+                </section>
+
+                <!-- MÓDULO 5 — Avaliação por Nível -->
+                <section class="panel" role="tabpanel" data-panel="5" aria-hidden="true">
+                    <h2 class="lesson__title">Avalia&ccedil;&atilde;o por N&iacute;vel</h2>
+                    <p class="lesson__text">Escolha o n&iacute;vel de dificuldade e teste seu conhecimento sobre os quatro m&oacute;dulos do ACS.</p>
+                    <div id="levelSelector" class="levels-grid"></div>
+                    <div id="levelQuiz" hidden></div>
+                </section>
+
+                <!-- MÓDULO 6 — Simulado de Prova -->
+                <section class="panel" role="tabpanel" data-panel="6" aria-hidden="true">
+                    <div id="examContainer"></div>
+                </section>
+
+            </main>
+        </div>
+
+        <div class="modal-backdrop" id="resultModal" role="dialog" aria-modal="true" aria-labelledby="modalScore">
+            <div class="modal">
+                <div class="modal__score" id="modalScore"></div>
+                <p class="modal__message" id="modalMessage"></p>
+                <button class="btn btn--primary" id="modalClose">Continuar Aprendizado</button>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Plataforma de Aprendizado ACS &mdash; Capacita&ccedil;&atilde;o Profissional &mdash; Maio 2026</p>
+        </footer>
+
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
