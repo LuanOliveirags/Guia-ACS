@@ -1,3 +1,28 @@
+// ─── Theme toggle ─────────────────────────────────────────────
+
+(function initTheme() {
+    const THEME_KEY = 'acs-theme';
+
+    function setTheme(theme) {
+        document.documentElement.classList.add('theme-transitioning');
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem(THEME_KEY, theme);
+        const icon = document.getElementById('themeIcon');
+        if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        const btn = document.getElementById('themeToggle');
+        if (btn) btn.setAttribute('aria-label', theme === 'dark' ? 'Mudar para modo claro' : 'Mudar para modo escuro');
+        setTimeout(() => document.documentElement.classList.remove('theme-transitioning'), 400);
+    }
+
+    const saved = localStorage.getItem(THEME_KEY) || 'light';
+    setTheme(saved);
+
+    document.getElementById('themeToggle')?.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+})();
+
 // ─── Module quiz answers ──────────────────────────────────────
 
 const CORRECT_ANSWERS = {
@@ -571,6 +596,7 @@ function activateModule(index) {
     panels.forEach((panel, i) => {
         panel.setAttribute('aria-hidden', i !== index);
     });
+    document.querySelector('.content')?.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 navItems.forEach(item => {
@@ -1539,6 +1565,7 @@ document.addEventListener('click', e => {
     if (action === 'start-topic')        startTopicPractice(btn.dataset.topic);
     if (action === 'submit-exam')        checkExam(false);
     if (action === 'exam-back-intro')    renderExamIntro();
+    if (action === 'go-module')          activateModule(Number(btn.dataset.target));
 });
 
 // ─── Init ─────────────────────────────────────────────────────

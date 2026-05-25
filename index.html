@@ -5,11 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guia ACS - Agentes Comunitários de Saúde</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script>
+        (function(){
+            var t = localStorage.getItem('acs-theme') || 'light';
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
 </head>
 <body>
     <div class="app">
 
         <header class="header">
+            <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+                <span class="theme-toggle__icon" id="themeIcon">🌙</span>
+            </button>
             <h1 class="header__title">Aprendizado ACS</h1>
             <p class="header__subtitle">Agentes Comunit&aacute;rios de Sa&uacute;de &mdash; Capacita&ccedil;&atilde;o Profissional</p>
         </header>
@@ -36,36 +45,58 @@
                 </div>
 
                 <nav>
-                    <p class="nav__heading" id="nav-label">M&oacute;dulos</p>
+                    <p class="nav__heading" id="nav-label">Navega&ccedil;&atilde;o</p>
                     <ul class="nav__list" role="tablist" aria-labelledby="nav-label">
-                        <li class="nav__item" role="tab" aria-selected="true"  tabindex="0"  data-module="0">
+
+                        <li class="nav__item nav__item--home" role="tab" aria-selected="true" tabindex="0" data-module="0">
+                            <span class="nav__item-icon">🏠</span>
+                            <span class="nav__item-label">In&iacute;cio</span>
+                        </li>
+
+                        <li class="nav__section" role="none">Aprendizado</li>
+
+                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="1">
+                            <span class="nav__item-icon">📋</span>
                             <span class="nav__item-label">Fundamentos do ACS</span>
                             <span class="badge badge--new" data-badge="0">Novo</span>
                         </li>
-                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="1">
+                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="2">
+                            <span class="nav__item-icon">❤️</span>
                             <span class="nav__item-label">Promo&ccedil;&atilde;o da Sa&uacute;de</span>
                             <span class="badge badge--new" data-badge="1">Novo</span>
                         </li>
-                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="2">
+                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="3">
+                            <span class="nav__item-icon">🤝</span>
                             <span class="nav__item-label">Atua&ccedil;&atilde;o na Comunidade</span>
                             <span class="badge badge--new" data-badge="2">Novo</span>
                         </li>
-                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="3">
+                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="4">
+                            <span class="nav__item-icon">🔍</span>
                             <span class="nav__item-label">Vigil&acirc;ncia em Sa&uacute;de</span>
                             <span class="badge badge--new" data-badge="3">Novo</span>
                         </li>
-                        <li class="nav__item nav__item--levels" role="tab" aria-selected="false" tabindex="-1" data-module="4">
+
+                        <li class="nav__section" role="none">Estudo</li>
+
+                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="5">
+                            <span class="nav__item-icon">📖</span>
                             <span class="nav__item-label">Conte&uacute;do para Estudo</span>
                             <span class="badge badge--new">19 T&oacute;picos</span>
                         </li>
-                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="5">
+                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="6">
+                            <span class="nav__item-icon">🏆</span>
                             <span class="nav__item-label">Avalia&ccedil;&atilde;o por N&iacute;vel</span>
                             <span class="badge badge--new">4 N&iacute;veis</span>
                         </li>
-                        <li class="nav__item nav__item--exam" role="tab" aria-selected="false" tabindex="-1" data-module="6">
+
+                        <li class="nav__section" role="none">Prova</li>
+
+                        <li class="nav__item" role="tab" aria-selected="false" tabindex="-1" data-module="7">
+                            <span class="nav__item-icon">📝</span>
                             <span class="nav__item-label">Simulado de Prova</span>
                             <span class="badge badge--exam">30 Quest&otilde;es</span>
                         </li>
+
                     </ul>
                 </nav>
 
@@ -73,8 +104,91 @@
 
             <main class="content">
 
-                <!-- MÓDULO 0 -->
+                <!-- HOME — painel 0 -->
                 <section class="panel" role="tabpanel" data-panel="0" aria-hidden="false">
+                    <div class="home">
+
+                        <div class="home__hero">
+                            <span class="home__hero-badge">Capacita&ccedil;&atilde;o ACS 2026</span>
+                            <h2 class="home__hero-title">Prepare-se para ser um<br>Agente de Sa&uacute;de</h2>
+                            <p class="home__hero-desc">Plataforma completa de estudos para Agentes Comunit&aacute;rios de Sa&uacute;de &mdash; conte&uacute;do estruturado, quizzes interativos e simulado de prova no formato oficial.</p>
+                            <div class="home__hero-actions">
+                                <button class="btn btn--primary" data-action="go-module" data-target="1">Come&ccedil;ar a Estudar &rarr;</button>
+                                <button class="btn btn--ghost home__btn-ghost" data-action="go-module" data-target="7">Ir para o Simulado</button>
+                            </div>
+                        </div>
+
+                        <div class="home__stats">
+                            <div class="home__stat">
+                                <span class="home__stat-value">19</span>
+                                <span class="home__stat-label">T&oacute;picos</span>
+                            </div>
+                            <div class="home__stat">
+                                <span class="home__stat-value">4</span>
+                                <span class="home__stat-label">M&oacute;dulos</span>
+                            </div>
+                            <div class="home__stat">
+                                <span class="home__stat-value">30</span>
+                                <span class="home__stat-label">Quest&otilde;es</span>
+                            </div>
+                            <div class="home__stat">
+                                <span class="home__stat-value">40'</span>
+                                <span class="home__stat-label">Cron&ocirc;metro</span>
+                            </div>
+                        </div>
+
+                        <h3 class="home__section-title">O que voc&ecirc; encontra aqui</h3>
+                        <div class="home__cards">
+                            <button class="home__card home__card--learn" data-action="go-module" data-target="1">
+                                <span class="home__card-icon">📋</span>
+                                <div class="home__card-body">
+                                    <p class="home__card-title">M&oacute;dulos de Aprendizado</p>
+                                    <p class="home__card-desc">4 m&oacute;dulos com conte&uacute;do te&oacute;rico, casos pr&aacute;ticos e quizzes &mdash; Fundamentos, Promo&ccedil;&atilde;o, Atua&ccedil;&atilde;o e Vigil&acirc;ncia.</p>
+                                </div>
+                                <span class="home__card-arrow">&rarr;</span>
+                            </button>
+                            <button class="home__card home__card--study" data-action="go-module" data-target="5">
+                                <span class="home__card-icon">📖</span>
+                                <div class="home__card-body">
+                                    <p class="home__card-title">Conte&uacute;do para Estudo</p>
+                                    <p class="home__card-desc">19 t&oacute;picos essenciais com pontos-chave, filtros por categoria e acompanhamento de progresso.</p>
+                                </div>
+                                <span class="home__card-arrow">&rarr;</span>
+                            </button>
+                            <button class="home__card home__card--level" data-action="go-module" data-target="6">
+                                <span class="home__card-icon">🏆</span>
+                                <div class="home__card-body">
+                                    <p class="home__card-title">Avalia&ccedil;&atilde;o por N&iacute;vel</p>
+                                    <p class="home__card-desc">Quest&otilde;es do B&aacute;sico ao Expert para testar seu dom&iacute;nio em cada &aacute;rea do conte&uacute;do ACS.</p>
+                                </div>
+                                <span class="home__card-arrow">&rarr;</span>
+                            </button>
+                            <button class="home__card home__card--exam" data-action="go-module" data-target="7">
+                                <span class="home__card-icon">📝</span>
+                                <div class="home__card-body">
+                                    <p class="home__card-title">Simulado de Prova</p>
+                                    <p class="home__card-desc">30 quest&otilde;es no formato do edital, cron&ocirc;metro de 40 min, nota 0&ndash;10 e corte em 5,0.</p>
+                                </div>
+                                <span class="home__card-arrow">&rarr;</span>
+                            </button>
+                        </div>
+
+                        <div class="home__about">
+                            <h3 class="home__section-title">O que &eacute; um ACS?</h3>
+                            <p class="home__about-text">O Agente Comunit&aacute;rio de Sa&uacute;de (ACS) &eacute; o profissional que mora e trabalha na mesma comunidade que atende. &Eacute; o elo entre as fam&iacute;lias e o SUS &mdash; realiza visitas domiciliares, acompanha grupos vulner&aacute;veis, promove educa&ccedil;&atilde;o em sa&uacute;de e identifica casos que precisam de aten&ccedil;&atilde;o m&eacute;dica antes que se agravem.</p>
+                            <div class="home__pillars">
+                                <div class="home__pillar"><span class="home__pillar-icon">🏠</span><span>Mora na comunidade</span></div>
+                                <div class="home__pillar"><span class="home__pillar-icon">🔗</span><span>Elo com o SUS</span></div>
+                                <div class="home__pillar"><span class="home__pillar-icon">📊</span><span>Vigil&acirc;ncia ativa</span></div>
+                                <div class="home__pillar"><span class="home__pillar-icon">❤️</span><span>Promo&ccedil;&atilde;o de sa&uacute;de</span></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- MÓDULO 1 — Fundamentos -->
+                <section class="panel" role="tabpanel" data-panel="1" aria-hidden="true">
                     <h2 class="lesson__title">Fundamentos do Agente Comunit&aacute;rio de Sa&uacute;de</h2>
 
                     <p class="lesson__text">
@@ -132,8 +246,8 @@
                     </div>
                 </section>
 
-                <!-- MÓDULO 1 -->
-                <section class="panel" role="tabpanel" data-panel="1" aria-hidden="true">
+                <!-- MÓDULO 2 — Promoção -->
+                <section class="panel" role="tabpanel" data-panel="2" aria-hidden="true">
                     <h2 class="lesson__title">Promo&ccedil;&atilde;o da Sa&uacute;de e Preven&ccedil;&atilde;o de Doen&ccedil;as</h2>
 
                     <p class="lesson__text">
@@ -190,8 +304,8 @@
                     </div>
                 </section>
 
-                <!-- MÓDULO 2 -->
-                <section class="panel" role="tabpanel" data-panel="2" aria-hidden="true">
+                <!-- MÓDULO 3 — Atuação -->
+                <section class="panel" role="tabpanel" data-panel="3" aria-hidden="true">
                     <h2 class="lesson__title">Atua&ccedil;&atilde;o Efetiva na Comunidade</h2>
 
                     <p class="lesson__text">
@@ -253,8 +367,8 @@
                     </div>
                 </section>
 
-                <!-- MÓDULO 3 -->
-                <section class="panel" role="tabpanel" data-panel="3" aria-hidden="true">
+                <!-- MÓDULO 4 — Vigilância -->
+                <section class="panel" role="tabpanel" data-panel="4" aria-hidden="true">
                     <h2 class="lesson__title">Vigil&acirc;ncia em Sa&uacute;de e Monitoramento</h2>
 
                     <p class="lesson__text">
@@ -317,8 +431,8 @@
                     </div>
                 </section>
 
-                <!-- MÓDULO 4 — Conteúdo para Estudo -->
-                <section class="panel" role="tabpanel" data-panel="4" aria-hidden="true">
+                <!-- MÓDULO 5 — Conteúdo para Estudo -->
+                <section class="panel" role="tabpanel" data-panel="5" aria-hidden="true">
                     <h2 class="lesson__title">Conte&uacute;do para Estudo</h2>
                     <p class="lesson__text">T&oacute;picos essenciais para o dia a dia do ACS &mdash; estude por categoria, marque o que j&aacute; domina e acompanhe seu progresso.</p>
 
@@ -338,16 +452,16 @@
                     <p class="study-no-results" id="studyNoResults" hidden>Nenhum t&oacute;pico encontrado para essa busca.</p>
                 </section>
 
-                <!-- MÓDULO 5 — Avaliação por Nível -->
-                <section class="panel" role="tabpanel" data-panel="5" aria-hidden="true">
+                <!-- MÓDULO 6 — Avaliação por Nível -->
+                <section class="panel" role="tabpanel" data-panel="6" aria-hidden="true">
                     <h2 class="lesson__title">Avalia&ccedil;&atilde;o por N&iacute;vel</h2>
                     <p class="lesson__text">Escolha o n&iacute;vel de dificuldade e teste seu conhecimento sobre os quatro m&oacute;dulos do ACS.</p>
                     <div id="levelSelector" class="levels-grid"></div>
                     <div id="levelQuiz" hidden></div>
                 </section>
 
-                <!-- MÓDULO 6 — Simulado de Prova -->
-                <section class="panel" role="tabpanel" data-panel="6" aria-hidden="true">
+                <!-- MÓDULO 7 — Simulado de Prova -->
+                <section class="panel" role="tabpanel" data-panel="7" aria-hidden="true">
                     <div id="examContainer"></div>
                 </section>
 
@@ -364,6 +478,7 @@
 
         <footer class="footer">
             <p>Plataforma de Aprendizado ACS &mdash; Capacita&ccedil;&atilde;o Profissional &mdash; Maio 2026</p>
+            <p class="footer__credit">Desenvolvido por <strong>Luan Gs</strong></p>
         </footer>
 
     </div>
