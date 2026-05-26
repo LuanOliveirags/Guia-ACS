@@ -23,6 +23,245 @@
     });
 })();
 
+// ─── Avatar / Profile ─────────────────────────────────────────
+
+(function initProfile() {
+    const PROFILE_KEY  = 'acs-profile';
+    const DICEBEAR     = 'https://api.dicebear.com/9.x/adventurer/svg';
+
+    const OPTS = {
+        femaleHair: [
+            { v:'long01',  l:'Liso'      }, { v:'long06',  l:'Ondulado'  },
+            { v:'long09',  l:'Cacheado'  }, { v:'long14',  l:'Trança'    },
+            { v:'long17',  l:'Bob'       }, { v:'long20',  l:'Rabo'      },
+            { v:'long24',  l:'Volumoso'  }, { v:'long26',  l:'Curto'     },
+        ],
+        maleHair: [
+            { v:'short01', l:'Clássico'  }, { v:'short03', l:'Social'    },
+            { v:'short05', l:'Riscado'   }, { v:'short07', l:'Moderno'   },
+            { v:'short10', l:'Ondulado'  }, { v:'short12', l:'Topete'    },
+            { v:'short15', l:'Natural'   }, { v:'short19', l:'Raspado'   },
+        ],
+        eyes: [
+            { v:'variant01', l:'Redondo'    }, { v:'variant04', l:'Amendoado' },
+            { v:'variant06', l:'Fechado'    }, { v:'variant10', l:'Sorridente'},
+            { v:'variant14', l:'Oval'       }, { v:'variant20', l:'Grande'    },
+        ],
+        eyebrows: [
+            { v:'variant01', l:'Reto'    }, { v:'variant04', l:'Curvado' },
+            { v:'variant08', l:'Fino'    }, { v:'variant12', l:'Grosso'  },
+        ],
+        glasses: [
+            { v:'',          l:'Sem óculos'  }, { v:'variant01', l:'Redondo'    },
+            { v:'variant02', l:'Retangular'  }, { v:'variant03', l:'Aviador'    },
+            { v:'variant05', l:'Quadrado'    },
+        ],
+        mouth: [
+            { v:'variant01', l:'Neutro'   }, { v:'variant04', l:'Sorriso'  },
+            { v:'variant07', l:'Feliz'    }, { v:'variant09', l:'Animado'  },
+            { v:'variant17', l:'Sério'    }, { v:'variant24', l:'Travesso' },
+        ],
+        earrings: [
+            { v:'',          l:'Nenhum'   }, { v:'variant01', l:'Argola'   },
+            { v:'variant02', l:'Bolinha'  }, { v:'variant03', l:'Coração'  },
+            { v:'variant04', l:'Comprido' }, { v:'variant05', l:'Estrela'  },
+        ],
+    };
+
+    function buildUrl(cfg) {
+        const seed = encodeURIComponent((cfg.name || 'acs').replace(/\s+/g, '-') + cfg.gender);
+        let url = `${DICEBEAR}?seed=${seed}&skinColor=${cfg.skinColor}&hairColor=${cfg.hairColor}&hair=${cfg.hair}&eyes=${cfg.eyes}&eyebrows=${cfg.eyebrows}&backgroundColor=b6e3f4,ffd5dc,c0aede,d1f4d9`;
+        if (cfg.mouth)    url += `&mouth=${cfg.mouth}`;
+        if (cfg.glasses)  url += `&glasses=${cfg.glasses}&glassesProbability=100`;
+        if (cfg.earrings) url += `&earrings=${cfg.earrings}&earringsProbability=100`;
+        return url;
+    }
+
+    function buildThumbUrl(cfg, paramName, paramValue) {
+        const c = { ...cfg, [paramName]: paramValue };
+        let url = `${DICEBEAR}?seed=${encodeURIComponent('acs-style-preview')}`;
+        url += `&skinColor=${c.skinColor}&hairColor=${c.hairColor}&hair=${c.hair}`;
+        url += `&eyes=${c.eyes}&eyebrows=${c.eyebrows}&backgroundColor=c0aede,b6e3f4`;
+        if (c.mouth)    url += `&mouth=${c.mouth}`;
+        if (c.glasses)  url += `&glasses=${c.glasses}&glassesProbability=100`;
+        if (c.earrings) url += `&earrings=${c.earrings}&earringsProbability=100`;
+        return url;
+    }
+
+    function defaultCfg() {
+        return { name:'', gender:'female', skinColor:'f2d3b1', hairColor:'2c1b18',
+                 hair:'long01', eyes:'variant01', eyebrows:'variant01', glasses:'',
+                 mouth:'variant04', earrings:'' };
+    }
+
+    function loadProfile() {
+        try { return JSON.parse(localStorage.getItem(PROFILE_KEY)); } catch { return null; }
+    }
+    function saveProfile(p) { localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); }
+
+    function applyToSidebar(cfg) {
+        const img  = document.getElementById('profileAvatarImg');
+        const name = document.getElementById('profileName');
+        if (img)  { img.src = buildUrl(cfg); img.style.borderRadius = '50%'; }
+        if (name) name.textContent = cfg.name || 'Estudante ACS';
+    }
+
+    function makeAvatarPicker(containerId, opts, currentVal, cfg, paramName, onPick) {
+        const el = document.getElementById(containerId);
+        el.innerHTML = opts.map(o => {
+            const sel = o.v === currentVal ? ' avatar-opt--selected' : '';
+            return `<button class="avatar-opt${sel}" data-value="${o.v}" title="${o.l}">
+                <img src="${buildThumbUrl(cfg, paramName, o.v)}" alt="${o.l}" width="56" height="56" loading="lazy">
+                <span class="avatar-opt__label">${o.l}</span>
+            </button>`;
+        }).join('');
+        el.onclick = function(e) {
+            const btn = e.target.closest('.avatar-opt');
+            if (!btn) return;
+            el.querySelectorAll('.avatar-opt').forEach(b => b.classList.remove('avatar-opt--selected'));
+            btn.classList.add('avatar-opt--selected');
+            onPick(btn.dataset.value);
+        };
+    }
+
+    function makeCirclePicker(containerId, currentVal, onPick) {
+        document.querySelectorAll(`#${containerId} .circle-opt`).forEach(btn => {
+            btn.classList.toggle('circle-opt--selected', btn.dataset.value === currentVal);
+        });
+        document.getElementById(containerId).onclick = function(e) {
+            const btn = e.target.closest('.circle-opt');
+            if (!btn) return;
+            this.querySelectorAll('.circle-opt').forEach(b => b.classList.remove('circle-opt--selected'));
+            btn.classList.add('circle-opt--selected');
+            onPick(btn.dataset.value);
+        };
+    }
+
+    function openModal(existing) {
+        const modal = document.getElementById('avatarModal');
+        const cfg   = existing ? { ...defaultCfg(), ...existing } : defaultCfg();
+
+        function preview() {
+            cfg.name = (document.getElementById('avatarName').value || '').trim();
+            const img = document.getElementById('avatarBigPreview');
+            if (img) img.src = buildUrl(cfg);
+        }
+
+        function buildHairPicker() {
+            makeAvatarPicker('hairStylePicker',
+                cfg.gender === 'female' ? OPTS.femaleHair : OPTS.maleHair,
+                cfg.hair, cfg, 'hair', v => { cfg.hair = v; preview(); });
+        }
+
+        function buildStylePickers() {
+            buildHairPicker();
+            makeAvatarPicker('eyesPicker',     OPTS.eyes,     cfg.eyes,     cfg, 'eyes',     v => { cfg.eyes     = v; preview(); });
+            makeAvatarPicker('eyebrowsPicker', OPTS.eyebrows, cfg.eyebrows, cfg, 'eyebrows', v => { cfg.eyebrows = v; preview(); });
+            makeAvatarPicker('mouthPicker',    OPTS.mouth,    cfg.mouth,    cfg, 'mouth',    v => { cfg.mouth    = v; preview(); });
+            makeAvatarPicker('glassesPicker',  OPTS.glasses,  cfg.glasses,  cfg, 'glasses',  v => { cfg.glasses  = v; preview(); });
+            makeAvatarPicker('earringsPicker', OPTS.earrings, cfg.earrings, cfg, 'earrings', v => { cfg.earrings = v; preview(); });
+        }
+
+        // Nome
+        document.getElementById('avatarName').value = cfg.name;
+        document.getElementById('avatarName').oninput = preview;
+
+        // Gênero
+        document.querySelectorAll('#genderPicker .avatar-toggle__btn').forEach(b =>
+            b.classList.toggle('avatar-toggle__btn--selected', b.dataset.value === cfg.gender));
+        document.getElementById('genderPicker').onclick = function(e) {
+            const btn = e.target.closest('.avatar-toggle__btn');
+            if (!btn) return;
+            cfg.gender = btn.dataset.value;
+            this.querySelectorAll('.avatar-toggle__btn').forEach(b =>
+                b.classList.toggle('avatar-toggle__btn--selected', b === btn));
+            cfg.hair = cfg.gender === 'female' ? 'long01' : 'short01';
+            buildHairPicker();
+            preview();
+        };
+
+        // Pele & cabelo — rebuilda thumbnails quando cores mudam
+        makeCirclePicker('skinPicker',      cfg.skinColor, v => { cfg.skinColor = v; buildStylePickers(); preview(); });
+        makeCirclePicker('hairColorPicker', cfg.hairColor, v => { cfg.hairColor = v; buildStylePickers(); preview(); });
+
+        // Style pickers com miniaturas do avatar
+        buildStylePickers();
+
+        // Aleatório
+        const randomBtn = document.getElementById('avatarRandomBtn');
+        if (randomBtn) randomBtn.onclick = function() {
+            const g    = Math.random() > .5 ? 'female' : 'male';
+            const hArr = g === 'female' ? OPTS.femaleHair : OPTS.maleHair;
+            const pick = arr => arr[Math.floor(Math.random() * arr.length)].v;
+            cfg.gender    = g;
+            cfg.skinColor = ['f2d3b1','f5cfa0','e5a07b','bd7c5e','a55220','694d3d'][Math.floor(Math.random()*6)];
+            cfg.hairColor = ['2c1b18','724133','a55728','d6b370','cabfad','efefef','f59797','6bd9e9'][Math.floor(Math.random()*8)];
+            cfg.hair      = pick(hArr);
+            cfg.eyes      = pick(OPTS.eyes);
+            cfg.eyebrows  = pick(OPTS.eyebrows);
+            cfg.glasses   = pick(OPTS.glasses);
+            cfg.mouth     = pick(OPTS.mouth);
+            cfg.earrings  = pick(OPTS.earrings);
+            document.querySelectorAll('#genderPicker .avatar-toggle__btn').forEach(b =>
+                b.classList.toggle('avatar-toggle__btn--selected', b.dataset.value === cfg.gender));
+            makeCirclePicker('skinPicker',      cfg.skinColor, v => { cfg.skinColor = v; buildStylePickers(); preview(); });
+            makeCirclePicker('hairColorPicker', cfg.hairColor, v => { cfg.hairColor = v; buildStylePickers(); preview(); });
+            buildStylePickers();
+            preview();
+        };
+
+        // Salvar
+        document.getElementById('avatarSaveBtn').onclick = function() {
+            cfg.name = document.getElementById('avatarName').value.trim() || 'Estudante ACS';
+            saveProfile(cfg);
+            applyToSidebar(cfg);
+            modal.hidden = true;
+        };
+
+        document.getElementById('avatarSkipBtn').onclick       = () => { modal.hidden = true; };
+        document.getElementById('avatarModalBackdrop').onclick = () => { modal.hidden = true; };
+
+        preview();
+        modal.hidden = false;
+        setTimeout(() => document.getElementById('avatarName').focus(), 120);
+    }
+
+    // Init
+    const profile = loadProfile();
+    if (profile) applyToSidebar(profile);
+    else         setTimeout(() => openModal(null), 800);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('profileCard')?.addEventListener('click', () => openModal(loadProfile()));
+    });
+    window.openAvatarModal = () => openModal(loadProfile());
+})();
+
+// ─── Firebase ─────────────────────────────────────────────────
+
+firebase.initializeApp({
+    apiKey: "AIzaSyDI_YXbvqHYksvVRa0iVoeRts0_32gYfrw",
+    authDomain: "guia-acs-8abb3.firebaseapp.com",
+    projectId: "guia-acs-8abb3",
+    storageBucket: "guia-acs-8abb3.firebasestorage.app",
+    messagingSenderId: "975842667906",
+    appId: "1:975842667906:web:51e5a0c31ae1fcb1b1b39b",
+});
+
+const db = firebase.firestore();
+
+// Cache em memória — evita múltiplas leituras por sessão
+let _questoesCache = null;
+
+async function getAllQuestoes() {
+    if (_questoesCache) return _questoesCache;
+    const snap = await db.collection('questoes').get();
+    _questoesCache = snap.docs
+        .map(d => ({ id: d.id, ...d.data() }))
+        .filter(q => q.ativo !== false);
+    return _questoesCache;
+}
+
 // ─── Module quiz answers ──────────────────────────────────────
 
 const CORRECT_ANSWERS = {
@@ -35,7 +274,8 @@ const CORRECT_ANSWERS = {
 // ─── Study topics data ───────────────────────────────────────
 
 const STUDY_CATEGORIES = {
-    legislacao: { label: 'Legislação',        color: 'primary'  },
+    sus:        { label: 'SUS',               color: 'primary'  },
+    legislacao: { label: 'Legislação',        color: 'info'     },
     atuacao:    { label: 'Atuação',           color: 'info'     },
     doencas:    { label: 'Doenças',           color: 'danger'   },
     saude:      { label: 'Saúde Prioritária', color: 'success'  },
@@ -242,7 +482,7 @@ const STUDY_TOPICS = [
     {
         id: 'sus-principios',
         title: 'SUS — Princípios e Organização',
-        category: 'legislacao',
+        category: 'sus',
         points: [
             'Criado pela Constituição Federal de 1988 (art. 196) e regulamentado pela Lei nº 8.080/1990',
             'Princípios doutrinários: Universalidade (atende todos), Equidade (prioriza quem mais precisa) e Integralidade (atenção completa)',
@@ -255,7 +495,7 @@ const STUDY_TOPICS = [
     {
         id: 'esf-equipe',
         title: 'Estratégia Saúde da Família (ESF)',
-        category: 'legislacao',
+        category: 'sus',
         points: [
             'Principal estratégia de organização da Atenção Primária — substituiu o modelo hospitalocêntrico',
             'Equipe mínima: médico, enfermeiro, técnico de enfermagem e ACS (1 ACS por microárea de até 750 pessoas)',
@@ -264,6 +504,32 @@ const STUDY_TOPICS = [
             'NASF-AB (Núcleo Ampliado de Saúde da Família): apoia a ESF com nutricionista, psicólogo, fisioterapeuta, entre outros',
         ],
         remember: 'A ESF mudou o SUS de um modelo de cura para um modelo de vínculo e prevenção. O ACS é a "antena" da equipe no território — detecta antes que a doença chegue à UBS.',
+    },
+    {
+        id: 'sus-niveis',
+        title: 'Níveis de Atenção e Redes de Saúde',
+        category: 'sus',
+        points: [
+            'Atenção Primária (APS): porta de entrada preferencial — UBS/ESF, resolução de 80% dos problemas de saúde',
+            'Atenção Secundária: ambulatórios especializados, CAPS, CEO — referência da APS para casos mais complexos',
+            'Atenção Terciária: hospitais de alta complexidade, UTIs, cirurgias — casos graves e procedimentos especializados',
+            'Redes Temáticas: Rede Cegonha, Rede de Urgência e Emergência, Rede de Atenção Psicossocial (RAPS)',
+            'Regulação: o ACS não acessa diretamente o secundário/terciário — passa pela UBS que solicita o encaminhamento',
+        ],
+        remember: 'O ACS atua exclusivamente na Atenção Primária. Seu papel é resolver o que for possível ali e referenciar adequadamente o que não for — sem tentar "pular" os níveis do sistema.',
+    },
+    {
+        id: 'sus-controle-social',
+        title: 'Controle Social e Participação Popular',
+        category: 'sus',
+        points: [
+            'Lei nº 8.142/1990 regulamenta a participação da comunidade na gestão do SUS',
+            'Conselho de Saúde: caráter permanente e deliberativo, composição paritária (50% usuários, 50% trabalhadores + gestores)',
+            'Conferência de Saúde: ocorre a cada 4 anos nos níveis municipal, estadual e nacional para avaliar e propor diretrizes',
+            'ACS tem papel estratégico: mobiliza a comunidade para participar dos Conselhos e Conferências',
+            'Fundo Nacional de Saúde (FNS): transfere recursos federais diretamente para municípios conforme indicadores',
+        ],
+        remember: 'O SUS é do povo. O controle social é o mecanismo que garante isso. O ACS é o elo mais próximo da comunidade — sua função inclui estimular a participação popular nas decisões de saúde.',
     },
     {
         id: 'hanseniase',
@@ -290,6 +556,136 @@ const STUDY_TOPICS = [
             'Teste rápido para HIV, hepatites B e C disponível gratuitamente na UBS',
         ],
         remember: 'Pessoas vivendo com HIV em tratamento adequado têm carga viral indetectável = intransmissível (I=I). O sigilo é obrigação legal. O ACS incentiva testagem, nunca estigmatiza.',
+    },
+    {
+        id: 'registro-civil',
+        title: 'Registro Civil e Documentação Básica',
+        category: 'atuacao',
+        points: [
+            'Registro de nascimento é direito de toda criança — deve ser feito em cartório nos primeiros 15 dias de vida',
+            'ACS orienta a família sobre local, prazo e documentos necessários para o registro',
+            'Sem registro civil não há acesso a CPF, escola, serviços de saúde, Bolsa Família e previdência',
+            'Documentos básicos da família: RG, CPF, Cartão SUS, Cartão do Bolsa Família, Caderneta da Criança',
+            'Identificar famílias sem documentação é parte do cadastramento — articular com CRAS e cartórios',
+        ],
+        remember: 'A falta de documentação é uma das maiores barreiras ao acesso a serviços. O ACS que identifica uma criança sem registro civil precisa agir imediatamente — é uma violação de direitos.',
+    },
+    {
+        id: 'saude-adolescente',
+        title: 'Saúde do Adolescente',
+        category: 'saude',
+        points: [
+            'Faixa etária: 10 a 19 anos — período de intensas transformações físicas, emocionais e sociais',
+            'Vacinação: HPV (9–14 anos, 2 doses), Meningocócica ACWY, reforço de dTpa e Hepatite B se incompleto',
+            'Sexualidade: orientar sobre prevenção de gravidez na adolescência e IST — abordagem sem julgamento',
+            'Saúde mental: identificar sinais de depressão, ansiedade, uso de substâncias e comportamentos de risco',
+            'Transtornos alimentares (anorexia, bulimia): sinais de alerta — peso muito abaixo do esperado, recusa alimentar, vômitos frequentes',
+        ],
+        remember: 'O adolescente tem direito ao sigilo nas consultas (Estatuto da Criança e do Adolescente). O ACS não expõe informações à família sem consentimento, exceto em situações de risco de vida.',
+    },
+    {
+        id: 'saude-homem',
+        title: 'Saúde do Homem',
+        category: 'saude',
+        points: [
+            'Homens buscam menos os serviços de saúde — mortalidade precoce é 2x maior que a das mulheres',
+            'Rastreamento de câncer de próstata: PSA e toque retal para homens a partir dos 50 anos (ou 45 com histórico familiar)',
+            'Hipertensão e diabetes são mais graves no homem por diagnóstico tardio — incentivar aferição e exames',
+            'Saúde sexual: orientar sobre uso de preservativo, prevenção de IST e câncer de pênis (higiene e HPV)',
+            'Saúde mental masculina: homens expressam menos sofrimento — suicídio é 3x mais frequente em homens',
+        ],
+        remember: '"Homem não vai ao médico" é um mito cultural perigoso. O ACS quebra essa barreira na visita domiciliar, falando com naturalidade sobre saúde masculina sem reforçar estereótipos.',
+    },
+    {
+        id: 'alimentacao-atividade',
+        title: 'Alimentação Saudável e Atividade Física',
+        category: 'saude',
+        points: [
+            'Guia Alimentar Brasileiro: base em alimentos in natura e minimamente processados; evitar ultraprocessados',
+            'Obesidade em adultos: IMC ≥ 30 — fator de risco para hipertensão, diabetes, doenças cardiovasculares e alguns cânceres',
+            'Obesidade em crianças: acompanhar curva de crescimento — peso acima do percentil 97 exige avaliação nutricional',
+            'Atividade física: 150 min/semana de intensidade moderada (caminhada rápida, natação, dança) para adultos',
+            'Sedentarismo: tão prejudicial quanto tabagismo — aumenta risco de 35 doenças crônicas',
+        ],
+        remember: 'Orientar alimentação saudável considerando a realidade da família: renda, cultura e acesso local. O ACS não prescreve dieta, mas ensina o GUIA ALIMENTAR com linguagem simples e acessível.',
+    },
+    {
+        id: 'ist-dst',
+        title: 'IST — Infecções Sexualmente Transmissíveis',
+        category: 'doencas',
+        points: [
+            'Principais IST: sífilis, gonorreia, clamídia, herpes genital, HPV, HIV — prevenção com preservativo',
+            'Sífilis: ressurgimento alarmante no Brasil — transmissão sexual e vertical; testes rápidos na UBS',
+            'Sífilis congênita: transmitida da mãe ao bebê na gestação — causa aborto, morte neonatal e malformações',
+            'HPV: vírus mais comum do mundo — causa verrugas genitais e câncer de colo do útero; vacina disponível no SUS',
+            'Toda IST em adulto requer rastreamento do parceiro(a) — o ACS orienta sem expor o paciente',
+        ],
+        remember: 'Sífilis em gestante é emergência — tratamento imediato com penicilina. Se o parceiro não tratar junto, a reinfecção é certa. O ACS pode ser o elo que quebra essa cadeia.',
+    },
+    {
+        id: 'saude-bucal',
+        title: 'Saúde Bucal',
+        category: 'saude',
+        points: [
+            'Saúde bucal começa na gestação: cárie materna é fator de risco para cárie na criança',
+            'Criança: limpeza das gengivas antes dos dentes nascerem; escovação com dentifrício fluoretado a partir dos 2 anos',
+            'Adolescente: maior risco de cárie e gengivite — uso de aparelho não substitui higiene diária rigorosa',
+            'Adulto: doença periodontal (gengiva) ligada a diabetes, doenças cardíacas e partos prematuros',
+            'CEO (Centro de Especialidades Odontológicas): referência do SUS para endodontia, prótese e cirurgia',
+        ],
+        remember: 'Dor de dente tira o sono, impede trabalho e afeta saúde sistêmica. Encaminhar para a UBS com equipe de saúde bucal. Fluor na água e dentifrício são as intervenções de saúde pública mais custo-efetivas da história.',
+    },
+    {
+        id: 'pessoa-deficiencia',
+        title: 'Atenção à Pessoa com Deficiência',
+        category: 'saude',
+        points: [
+            'Lei Brasileira de Inclusão (Lei nº 13.146/2015): garante direitos de acessibilidade, educação, trabalho e saúde',
+            'Tipos: física, intelectual, visual, auditiva e múltipla — cada uma exige abordagem e encaminhamentos específicos',
+            'Crianças com deficiência: diagnóstico precoce e estimulação são fundamentais — ACS identifica sinais de alerta no desenvolvimento',
+            'Benefício de Prestação Continuada (BPC): 1 salário mínimo para PcD em situação de pobreza — ACS orienta sobre acesso',
+            'Barreiras: arquitetônicas, comunicacionais e atitudinais — ACS mapeia dificuldades da pessoa no território',
+        ],
+        remember: 'Deficiência não é doença. O ACS combate o preconceito, identifica barreiras na comunidade e conecta a pessoa com deficiência às redes de apoio: CRAS, CER, CAPS e serviços de reabilitação.',
+    },
+    {
+        id: 'acamados',
+        title: 'Cuidados com Pessoas Acamadas',
+        category: 'saude',
+        points: [
+            'Lesão por pressão (escaras): principal complicação — prevenção com mudança de decúbito a cada 2 horas',
+            'Higiene: banho no leito, higiene oral e cuidados com pele — orientar cuidadores sobre técnicas corretas',
+            'Nutrição: risco alto de desnutrição e desidratação — avaliar ingestão alimentar em toda visita',
+            'Pneumonia aspirativa: risco em pacientes com dificuldade de deglutição — posicionamento correto nas refeições',
+            'Sobrecarga do cuidador: depressão e síndrome do esgotamento são frequentes — ACS ativa rede de apoio',
+        ],
+        remember: 'O cuidador é tão importante quanto o paciente. Sem apoio e orientação, o cuidador adoece junto. O ACS avalia tanto a saúde do acamado quanto o bem-estar de quem cuida.',
+    },
+    {
+        id: 'violencia-familiar',
+        title: 'Violência Familiar',
+        category: 'social',
+        points: [
+            'Tipos: física, psicológica, sexual, patrimonial e negligência — todas são formas de violação de direitos',
+            'Violência contra a mulher: Lei Maria da Penha (Lei nº 11.340/2006) — notificação é obrigatória e sigilosa',
+            'Violência contra criança/adolescente: notificação ao Conselho Tutelar é obrigatória por qualquer cidadão',
+            'Violência contra o idoso: sinais — hematomas, medo, dinheiro desaparecendo, isolamento, negligência',
+            'Violência contra PcD: grupo altamente vulnerável — abuso frequentemente praticado por cuidadores',
+        ],
+        remember: 'O ACS não é investigador nem juiz. Sua função é identificar sinais, acolher com cuidado e acionar a rede de proteção (Conselho Tutelar, CREAS, DEAM, UBS). Nunca confrontar o agressor sozinho.',
+    },
+    {
+        id: 'outras-doencas-vetores',
+        title: 'Esquistossomose, Malária e Tracoma',
+        category: 'doencas',
+        points: [
+            'Esquistossomose: causada pelo Schistosoma mansoni — transmissão pelo contato com água doce contaminada por caramujos; risco em regiões com saneamento precário',
+            'Malária: transmitida pelo Anopheles darlingi — endêmica na Amazônia; febre cíclica, calafrios e sudorese; notificação compulsória',
+            'Tracoma: infecção ocular bacteriana (Chlamydia trachomatis) — transmissão por contato direto; principal causa de cegueira evitável no mundo',
+            'Prevenção comum: saneamento básico, acesso à água tratada, higiene e controle de vetores',
+            'ACS identifica casos suspeitos e aciona a vigilância — todas são doenças de notificação compulsória',
+        ],
+        remember: 'Essas doenças são marcadores de pobreza e ausência de saneamento. O ACS que atua em áreas endêmicas precisa conhecê-las bem — diagnóstico tardio significa sequelas permanentes.',
     },
 ];
 
@@ -582,6 +978,11 @@ const studyState = {
     searchQuery:  '',
 };
 
+const levelState = {
+    questions: [],
+    levelKey:  null,
+};
+
 // ─── Navigation ───────────────────────────────────────────────
 
 const navItems = document.querySelectorAll('.nav__item');
@@ -826,7 +1227,7 @@ function renderLevelSelector() {
             <div class="level-card__body">
                 <p class="level-card__name">${level.label}</p>
                 <p class="level-card__desc">${level.description}</p>
-                <p class="level-card__meta">${level.questions.length} questões</p>
+                <p class="level-card__meta">6 questões por tentativa</p>
             </div>
             <span class="level-card__cta">Iniciar →</span>
         </button>
@@ -836,12 +1237,36 @@ function renderLevelSelector() {
     quiz.hidden     = true;
 }
 
-function renderLevelQuiz(levelKey) {
+async function renderLevelQuiz(levelKey) {
     const level    = LEVEL_QUESTIONS[levelKey];
     const selector = document.getElementById('levelSelector');
     const quiz     = document.getElementById('levelQuiz');
 
-    const questionsHTML = level.questions.map((q, i) => `
+    selector.hidden = true;
+    quiz.hidden     = false;
+    quiz.innerHTML  = `
+        <div class="level-quiz-header">
+            <button class="btn btn--ghost" data-action="level-back">← Voltar</button>
+            <h3 class="level-quiz-header__title">Nível ${level.label}</h3>
+        </div>
+        <div style="text-align:center;padding:40px;opacity:.6">Sorteando questões...</div>
+    `;
+
+    let questions;
+    try {
+        const all  = await getAllQuestoes();
+        const pool = all.filter(q => q.nivel === levelKey);
+        questions  = pool.length > 0
+            ? shuffleArray(pool).slice(0, 6)
+            : level.questions;
+    } catch (_) {
+        questions = level.questions;
+    }
+
+    levelState.questions = questions;
+    levelState.levelKey  = levelKey;
+
+    const questionsHTML = questions.map((q, i) => `
         <div class="question" data-question="${q.id}">
             <p class="question__text">${i + 1}. ${q.text}</p>
             <div class="options" role="radiogroup">
@@ -860,7 +1285,7 @@ function renderLevelQuiz(levelKey) {
         <div class="level-quiz-header">
             <button class="btn btn--ghost" data-action="level-back">← Voltar</button>
             <h3 class="level-quiz-header__title">Nível ${level.label}</h3>
-            <span class="level-badge level-badge--${level.color}">${level.questions.length} questões</span>
+            <span class="level-badge level-badge--${level.color}">${questions.length} questões</span>
         </div>
         ${questionsHTML}
         <div class="quiz__actions">
@@ -875,9 +1300,6 @@ function renderLevelQuiz(levelKey) {
             </div>
         </div>
     `;
-
-    selector.hidden = true;
-    quiz.hidden     = false;
 }
 
 // ─── Level quiz — check ───────────────────────────────────────
@@ -885,11 +1307,12 @@ function renderLevelQuiz(levelKey) {
 function checkLevelQuiz(levelKey) {
     const level       = LEVEL_QUESTIONS[levelKey];
     const quiz        = document.getElementById('levelQuiz');
+    const questions   = levelState.questions;
     let correct       = 0;
     let answered      = 0;
     let allAnswered   = true;
 
-    level.questions.forEach(q => {
+    questions.forEach(q => {
         const questionEl = quiz.querySelector(`[data-question="${q.id}"]`);
         const selected   = questionEl.querySelector(`input[name="${q.id}"]:checked`);
         const feedback   = questionEl.querySelector('.feedback');
@@ -1345,21 +1768,60 @@ function renderTopicSelector() {
     `;
 }
 
-function startSimulado() {
+async function startSimulado() {
     examState.mode      = 'simulado';
     examState.topic     = null;
-    examState.questions = shuffleArray(EXAM_QUESTIONS);
     examState.timeLeft  = 40 * 60;
     examState.submitted = false;
+
+    document.getElementById('examContainer').innerHTML =
+        '<div style="text-align:center;padding:60px;opacity:.6">Preparando simulado...</div>';
+
+    try {
+        const all     = await getAllQuestoes();
+        const byTopic = {};
+        all.forEach(q => {
+            if (q.topic) {
+                if (!byTopic[q.topic]) byTopic[q.topic] = [];
+                byTopic[q.topic].push(q);
+            }
+        });
+
+        const selected = [];
+        Object.entries(EXAM_TOPICS).forEach(([key, t]) => {
+            const pool = shuffleArray(byTopic[key] || []);
+            selected.push(...pool.slice(0, t.count));
+        });
+
+        examState.questions = selected.length > 0
+            ? shuffleArray(selected)
+            : shuffleArray(EXAM_QUESTIONS);
+    } catch (_) {
+        examState.questions = shuffleArray(EXAM_QUESTIONS);
+    }
+
     renderExam(true);
 }
 
-function startTopicPractice(topicKey) {
+async function startTopicPractice(topicKey) {
     examState.mode      = 'topico';
     examState.topic     = topicKey;
-    examState.questions = EXAM_QUESTIONS.filter(q => q.topic === topicKey);
     examState.timeLeft  = 0;
     examState.submitted = false;
+
+    document.getElementById('examContainer').innerHTML =
+        '<div style="text-align:center;padding:60px;opacity:.6">Carregando questões...</div>';
+
+    try {
+        const all  = await getAllQuestoes();
+        const pool = all.filter(q => q.topic === topicKey);
+        examState.questions = pool.length > 0
+            ? shuffleArray(pool)
+            : EXAM_QUESTIONS.filter(q => q.topic === topicKey);
+    } catch (_) {
+        examState.questions = EXAM_QUESTIONS.filter(q => q.topic === topicKey);
+    }
+
     renderExam(false);
 }
 

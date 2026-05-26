@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(list\\(d.keys\\(\\)\\)[:5]\\)\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); users=d.get\\('tokens',{}\\).get\\('access_token',''\\) or d.get\\('user',{}\\).get\\('email',''\\); print\\(users\\)\")",
+      "Bash(firebase use *)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(node -e ' *)",
+      "Bash(node -e \"require\\('firebase-tools'\\)\")",
+      "Bash(node -e \"const p=require.resolve\\('firebase-tools'\\); console.log\\(p\\);\")",
+      "Bash(node seed-node.js)"
+    ]
+  }
+}

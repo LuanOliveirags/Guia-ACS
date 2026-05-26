@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gcloud --version)",
+      "Bash(firebase login:list)",
+      "Bash(firebase projects:list)",
+      "Bash(firebase login:add)",
+      "Bash(node -e ' *)"
+    ]
+  }
+}

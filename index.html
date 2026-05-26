@@ -27,6 +27,16 @@
 
             <aside class="sidebar" aria-label="Navega&ccedil;&atilde;o dos m&oacute;dulos">
 
+                <div class="profile-card" id="profileCard" title="Editar perfil">
+                    <div class="profile-card__avatar">
+                        <img id="profileAvatarImg" src="" alt="Avatar" width="52" height="52" />
+                    </div>
+                    <div class="profile-card__info">
+                        <p class="profile-card__name" id="profileName">Estudante ACS</p>
+                        <p class="profile-card__edit">✏️ editar perfil</p>
+                    </div>
+                </div>
+
                 <div class="progress-card" aria-live="polite">
                     <p class="progress-card__label">Seu progresso</p>
                     <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar">
@@ -483,6 +493,82 @@
 
     </div>
 
+    <!-- Modal de Criação de Avatar -->
+    <div class="avatar-modal" id="avatarModal" role="dialog" aria-modal="true" aria-labelledby="avatarModalTitle" hidden>
+        <div class="avatar-modal__backdrop" id="avatarModalBackdrop"></div>
+        <div class="avatar-modal__box">
+
+            <div class="avatar-modal__header">
+                <div class="avatar-big-preview">
+                    <img id="avatarBigPreview" src="" alt="Pré-visualização do avatar" width="120" height="120" />
+                </div>
+                <button class="avatar-random-btn" id="avatarRandomBtn">🎲 Aleatório</button>
+                <h2 class="avatar-modal__title" id="avatarModalTitle">Crie seu perfil</h2>
+                <p class="avatar-modal__subtitle">Personalize sua experiência de aprendizado</p>
+            </div>
+
+            <div class="avatar-modal__body">
+                <label class="avatar-modal__label" for="avatarName">Seu nome</label>
+                <input class="avatar-modal__input" id="avatarName" type="text" placeholder="Como quer ser chamado(a)?" maxlength="30" autocomplete="off">
+
+                <p class="avatar-modal__label">Gênero</p>
+                <div class="avatar-toggle" id="genderPicker">
+                    <button class="avatar-toggle__btn avatar-toggle__btn--selected" data-value="female">♀ Feminino</button>
+                    <button class="avatar-toggle__btn" data-value="male">♂ Masculino</button>
+                </div>
+
+                <p class="avatar-modal__label">Tom de pele</p>
+                <div class="circle-row" id="skinPicker">
+                    <button class="circle-opt circle-opt--selected" data-value="f2d3b1" style="background:#f2d3b1" title="Claro 1"></button>
+                    <button class="circle-opt" data-value="f5cfa0" style="background:#f5cfa0" title="Claro 2"></button>
+                    <button class="circle-opt" data-value="e5a07b" style="background:#e5a07b" title="Médio"></button>
+                    <button class="circle-opt" data-value="bd7c5e" style="background:#bd7c5e" title="Médio-escuro"></button>
+                    <button class="circle-opt" data-value="a55220" style="background:#a55220" title="Escuro"></button>
+                    <button class="circle-opt" data-value="694d3d" style="background:#694d3d" title="Muito escuro"></button>
+                </div>
+
+                <p class="avatar-modal__label">Cor do cabelo</p>
+                <div class="circle-row" id="hairColorPicker">
+                    <button class="circle-opt circle-opt--selected" data-value="2c1b18" style="background:#2c1b18" title="Preto"></button>
+                    <button class="circle-opt" data-value="724133" style="background:#724133" title="Castanho"></button>
+                    <button class="circle-opt" data-value="a55728" style="background:#a55728" title="Ruivo"></button>
+                    <button class="circle-opt" data-value="d6b370" style="background:#d6b370" title="Loiro"></button>
+                    <button class="circle-opt" data-value="cabfad" style="background:#cabfad" title="Grisalho"></button>
+                    <button class="circle-opt" data-value="efefef" style="background:#efefef;border-color:#ccc" title="Branco"></button>
+                    <button class="circle-opt" data-value="f59797" style="background:#f59797" title="Rosa"></button>
+                    <button class="circle-opt" data-value="6bd9e9" style="background:#6bd9e9" title="Azul"></button>
+                </div>
+
+                <p class="avatar-modal__label">Estilo do cabelo</p>
+                <div class="style-row" id="hairStylePicker"></div>
+
+                <p class="avatar-modal__label">Olhos</p>
+                <div class="style-row" id="eyesPicker"></div>
+
+                <p class="avatar-modal__label">Sobrancelhas</p>
+                <div class="style-row" id="eyebrowsPicker"></div>
+
+                <p class="avatar-modal__label">Boca</p>
+                <div class="style-row" id="mouthPicker"></div>
+
+                <p class="avatar-modal__label">Óculos</p>
+                <div class="style-row" id="glassesPicker"></div>
+
+                <p class="avatar-modal__label">Acessórios</p>
+                <div class="style-row" id="earringsPicker"></div>
+            </div>
+
+            <div class="avatar-modal__footer">
+                <button class="btn btn--primary avatar-modal__btn" id="avatarSaveBtn">Salvar perfil →</button>
+                <button class="avatar-modal__skip" id="avatarSkipBtn">Pular por agora</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    <!-- Para popular o banco pela 1ª vez, inclua temporariamente: -->
+    <!-- <script src="js/seed.js"></script> -->
     <script src="js/app.js"></script>
 </body>
 </html>
